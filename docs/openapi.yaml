@@ -11,36 +11,501 @@ servers:
 tags:
   - name: Пользователь
     description: |
-        В этом разделе вы можете получить информацию
-        о всех пользователях или о конкретном, а также
-        изменить или удалить информацию о нем.
+      В этом разделе вы можете получить информацию
+      о всех пользователях или о конкретном, а также
+      изменить или удалить информацию о нем.
   - name: Сообщение
     description: |
-        В этом разделе вы можете получить информацию
-        о всех сообщениях или о конкретном, а также
-        изменить или удалить информацию о нем.
+      В этом разделе вы можете получить информацию
+      о всех сообщениях или о конкретном, а также
+      изменить или удалить информацию о нем.
   - name: Медиафайлы
     description: |
-        В этом разделе вы можете получить информацию
-        о всех вложениях в сообщениях или о конкретном, а также
-        добавить или удалить вложение.
+      В этом разделе вы можете получить информацию
+      о всех вложениях в сообщениях или о конкретном, а также
+      добавить или удалить вложение.
 security:
   - SecretApiKey: []
   - JWT: []
 paths:
   /user:
-    $ref: ./paths/users.yaml
-  /user/{id}:
-    $ref: './paths/user@{id}.yaml'
+    get:
+      tags:
+        - Пользователь
+      summary: Получить информацию о пользователях
+      operationId: GetUsers
+      description: |
+        Получить информацию о пользователях
+      responses:
+        '200':
+          description: Информация о пользователях была успешно получена
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '401':
+          description: Отказано в доступе
+    post:
+      tags:
+        - Пользователь
+      summary: Добавить нового пользователя
+      operationId: PostUser
+      description: |
+        Добавить нового пользователя
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Пользователь был успешно добавлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Отказано в доступе
+        '422':
+          description: Неверные данные
+  '/user/{id}':
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+    get:
+      tags:
+        - Пользователь
+      summary: Получить пользователя по ID
+      operationId: GetUser
+      description: |
+        Получить информацию о пользователе по ID
+      responses:
+        '200':
+          description: Информация о пользователе успешно получена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Отказано в доступе
+        '404':
+          description: Не найдено
+    put:
+      tags:
+        - Пользователь
+      summary: Добавить или изменить пользователя по ID
+      operationId: PutUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Пользователь был добавлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Отказано в доступе
+        '404':
+          description: Не найдено
+        '409':
+          description: Пользователь существует и не может быть обновлен
+        '422':
+          description: Неверные данные
+    delete:
+      tags:
+        - Пользователь
+      summary: Удалить пользователя по ID
+      operationId: DeleteUser
+      description: |
+        Удалить пользователя по ID
+      responses:
+        '204':
+          description: Пользователь был удален
+        '401':
+          description: Отказано в доступе
+        '402':
+          description: Не можеть быть удален
+        '404':
+          description: Не найдено
   /message:
-    $ref: './paths/message.yaml'
-  /message/{id}:
-    $ref: './paths/message@{id}.yaml'
-  /message/{userId}:
-    $ref: './paths/message@{userId}.yaml'
+    get:
+      tags:
+        - Сообщение
+      summary: Получить информацию о сообщениях
+      operationId: GetMessages
+      description: |
+        Получить информацию о сообщениях
+      responses:
+        '200':
+          description: Информация о сообщениях была успешно получена
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Messages'
+        '401':
+          description: Отказано в доступе
+    post:
+      tags:
+        - Сообщение
+      summary: Добавить новое сообщение
+      operationId: PostMessage
+      description: |
+        Добавить новое сообщение
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Messages'
+      responses:
+        '200':
+          description: Сообщение было успешно добавлено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Messages'
+        '401':
+          description: Отказано в доступе
+        '422':
+          description: Неверные данные
+  '/message/{id}':
+    get:
+      tags:
+        - Сообщение
+      summary: Получить сообщение по ID
+      operationId: GetMessage
+      description: |
+        Получить информацию о сообщении по ID
+      responses:
+        '200':
+          description: Информация о сообщении успешно получена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Messages'
+        '401':
+          description: Отказано в доступе
+        '404':
+          description: Не найдено
+    put:
+      tags:
+        - Сообщение
+      summary: Добавить или изменить сообщение по ID
+      operationId: PutMessage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Messages'
+      responses:
+        '201':
+          description: Сообщение было добавлено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Messages'
+        '401':
+          description: Отказано в доступе
+        '404':
+          description: Не найдено
+        '409':
+          description: Сообщение существует и не может быть обновлено
+        '422':
+          description: Неверные данные
+    delete:
+      tags:
+        - Сообщение
+      summary: Удалить сообщение по ID
+      operationId: DeleteMessage
+      description: |
+        Удалить сообщение по ID
+      responses:
+        '204':
+          description: Сообщение было удалено
+        '401':
+          description: Отказано в доступе
+        '402':
+          description: Не можеть быть удален
+        '404':
+          description: Не найдено
+  '/message/{userId}':
+    get:
+      tags:
+        - Сообщение
+      summary: Получить все сообщения пользователя по его ID
+      operationId: GetMessagesById
+      description: |
+        Получить все сообщения пользователя по его ID
+      responses:
+        '200':
+          description: Информация о сообщениях пользователя успешно получена
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Messages'
+        '401':
+          description: Отказано в доступе
+        '404':
+          description: Не найдено
   /files:
-    $ref: './paths/files.yaml'
-  /file/{id}:
-    $ref: './paths/file@{id}.yaml'
-  /file/{userId}:
-    $ref: './paths/files@{userId}.yaml'
+    get:
+      tags:
+        - Медиафайлы
+      summary: Получить информацию о вложениях
+      operationId: GetFiles
+      description: |
+        Получить информацию о вложениях
+      responses:
+        '200':
+          description: Информация о файлах была успешно получена
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/File'
+        '401':
+          description: Отказано в доступе
+    post:
+      tags:
+        - Медиафайлы
+      summary: Добавить новый файл
+      operationId: PostFile
+      description: |
+        Добавить новый файл
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/File'
+      responses:
+        '200':
+          description: Файл был успешно добавлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/File'
+        '401':
+          description: Отказано в доступе
+        '422':
+          description: Неверные данные
+  '/file/{id}':
+    parameters:
+      - $ref: '#/components/parameters/resourceId'
+    get:
+      tags:
+        - Медиафайлы
+      summary: Получить медиафайл по ID
+      operationId: GetFile
+      description: |
+        Получить информацию о вложении по ID
+      responses:
+        '200':
+          description: Информация о вложении успешно получена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/File'
+        '401':
+          description: Отказано в доступе
+        '404':
+          description: Не найдено
+    delete:
+      tags:
+        - Медиафайлы
+      summary: Удалить по ID
+      operationId: DeleteFile
+      description: |
+        Удалить вложение по ID
+      responses:
+        '204':
+          description: Вложение было удалено
+        '401':
+          description: Отказано в доступе
+        '402':
+          description: Не можеть быть удален
+        '404':
+          description: Не найдено
+  '/file/{userId}':
+    get:
+      tags:
+        - Медиафайлы
+      summary: Получить медиафайлы по ID пользователя
+      operationId: GetFilesByUserId
+      description: |
+        Получить информацию о вложении по ID пользователя,
+        который их загрузил
+      responses:
+        '200':
+          description: Информация о вложениях успешно получена
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/File'
+        '401':
+          description: Отказано в доступе
+        '404':
+          description: Не найдено
+components:
+  schemas:
+    ResourceId:
+      type: string
+      description: The resource ID. Defaults to UUID v4
+      maxLength: 50
+      example: 4f6cf35x-2c4y-483z-a0a9-158621f77a21
+    ServerTimestamp:
+      type: string
+      description: 'Read-only timestamp, automatically assigned on back-end.'
+      format: date-time
+      readOnly: true
+    User:
+      type: object
+      required:
+        - name
+        - email
+        - password
+      properties:
+        id:
+          description: User identifier string
+          readOnly: true
+          allOf:
+            - $ref: '#/components/schemas/ResourceId'
+        name:
+          description: Username'
+          type: string
+          maxLength: 255
+          example: Ivanov Ivan Ivanovich
+        password:
+          description: The token's password
+          type: string
+          format: password
+          writeOnly: true
+        phoneNumbers:
+          description: The phone value
+          type: string
+          example: 512-710-1640
+        email:
+          description: The email value
+          type: string
+          example: portret24@example.com
+        createdTime:
+          description: User registered time
+          allOf:
+            - $ref: '#/components/schemas/ServerTimestamp'
+        updatedTime:
+          description: User updated time
+          allOf:
+            - $ref: '#/components/schemas/ServerTimestamp'
+    Messages:
+      type: object
+      required:
+        - sender
+      properties:
+        id:
+          description: The message identifier string
+          readOnly: true
+          allOf:
+            - $ref: '#/components/schemas/ResourceId'
+        sender:
+          description: User ID
+          allOf:
+            - $ref: '#/components/schemas/User'
+        receiver:
+          description: Who will receive the message
+          type: string
+          maxLength: 255
+          example: sevsu@mail.ru
+        createdTime:
+          description: Message created time
+          allOf:
+            - $ref: '#/components/schemas/ServerTimestamp'
+        sentTime:
+          description: Message sent time
+          allOf:
+            - $ref: '#/components/schemas/ServerTimestamp'
+        topic:
+          description: Topic of message
+          type: string
+          maxLength: 255
+        messageText:
+          description: Text of message
+          type: string
+        parentMessage:
+          description: Message may have many stairs with same topic
+          allOf:
+            - $ref: '#/components/schemas/Messages'
+        status:
+          description: Transaction status
+          type: string
+          readOnly: true
+        files:
+          description: Additional files
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/File'
+    File:
+      type: object
+      required:
+        - name
+      properties:
+        id:
+          readOnly: true
+          allOf:
+            - $ref: '#/components/schemas/ResourceId'
+        name:
+          description: Original File name
+          type: string
+        userId:
+          description: Who has loaded this file
+          readOnly: true
+          allOf:
+            - $ref: '#/components/schemas/User'
+        extension:
+          description: The File extension
+          type: string
+        description:
+          description: The File description
+          type: string
+        mime:
+          description: The mime type
+          type: string
+          readOnly: true
+          enum:
+            - image/png
+            - image/jpeg
+            - image/gif
+            - application/pdf
+            - audio/mpeg
+        size:
+          description: The File size in bytes
+          type: integer
+          readOnly: true
+        width:
+          description: 'Image width, applicable to images only'
+          type: integer
+          readOnly: true
+        height:
+          description: 'Image height, applicable to images only'
+          type: integer
+          readOnly: true
+  parameters:
+    resourceId:
+      name: id
+      in: path
+      description: The resource identifier string
+      required: true
+      schema:
+        type: string
+        maxLength: 50
+        pattern: '^[@~\-\.\w]+$'
