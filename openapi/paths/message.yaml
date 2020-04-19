@@ -1,0 +1,43 @@
+get:
+  tags:
+    - Сообщение
+  summary: Получить информацию о сообщениях
+  operationId: GetMessages
+  description: |
+    Получить информацию о сообщениях
+  responses:
+    '200':
+      description: Информация о сообщениях была успешно получена
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/Messages.yaml
+    '401':
+      description: Отказано в доступе
+post:
+  tags:
+    - Сообщение
+  summary: Добавить новое сообщение
+  operationId: PostMessage
+  description: |
+    Добавить новое сообщение
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Messages.yaml
+      description: Message resource
+      required: true
+  responses:
+    '200':
+      description: Сообщение было успешно добавлено
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Messages.yaml
+    '401':
+      description: Отказано в доступе
+    '422':
+      description: Неверные данные

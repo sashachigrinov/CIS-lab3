@@ -1,0 +1,63 @@
+parameters:
+  - $ref: ../components/parameters/resourceId.yaml
+get:
+  tags:
+    - Сообщение
+  summary: Получить сообщение по ID
+  operationId: GetMessage
+  description: |
+    Получить информацию о сообщении по ID
+  responses:
+    '200':
+      description: Информация о сообщении успешно получена
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Messages.yaml
+    '401':
+      description: Отказано в доступе
+    '404':
+      description: Не найдено
+put:
+  tags:
+    - Сообщение
+  summary: Добавить или изменить сообщение по ID
+  operationId: PutMessage
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Messages.yaml
+      description: Message resource
+      required: true
+  responses:
+    '201':
+      description: Сообщение было добавлено
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Messages.yaml
+    '401':
+      description: Отказано в доступе
+    '404':
+      description: Не найдено
+    '409':
+      description: Сообщение существует и не может быть обновлено
+    '422':
+      description: Неверные данные
+delete:
+  tags:
+    - Сообщение
+  summary: Удалить сообщение по ID
+  operationId: DeleteMessage
+  description: |
+    Удалить сообщение по ID
+  responses:
+    '204':
+      description: Сообщение было удалено
+    '401':
+      description: Отказано в доступе
+    '402':
+      description: Не можеть быть удален
+    '404':
+      description: Не найдено

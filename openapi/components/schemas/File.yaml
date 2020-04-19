@@ -1,0 +1,44 @@
+type: object
+require:
+  - name
+properties:
+  id:
+    readOnly: true
+    allOf:
+      - $ref: ./ResourceId.yaml
+  name:
+    description: Original File name
+    type: string
+  userId:
+    description: Who has loaded this file
+    readOnly: true;
+    allOf:
+      - $ref: ./User.yaml
+  extension:
+    description: The File extension
+    type: string
+  description:
+    description: The File description
+    type: string
+  mime:
+    description: The mime type
+    type: string
+    readOnly: true
+    enum:
+      - image/png
+      - image/jpeg
+      - image/gif
+      - application/pdf
+      - audio/mpeg
+  size:
+    description: The File size in bytes
+    type: integer
+    readOnly: true
+  width:
+    description: 'Image width, applicable to images only'
+    type: integer
+    readOnly: true
+  height:
+    description: 'Image height, applicable to images only'
+    type: integer
+    readOnly: true

@@ -1,0 +1,23 @@
+parameters:
+  - $ref: ../components/parameters/resourceId.yaml
+get:
+  tags:
+    - Медиафайлы
+  summary: Получить медиафайлы по ID пользователя
+  operationId: GetFilesByUserId
+  description: |
+    Получить информацию о вложении по ID пользователя,
+    который их загрузил
+  responses:
+    '200':
+      description: Информация о вложениях успешно получена
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/File.yaml
+    '401':
+      description: Отказано в доступе
+    '404':
+      description: Не найдено

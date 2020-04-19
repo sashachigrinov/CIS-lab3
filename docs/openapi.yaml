@@ -1,0 +1,46 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: GMAIL API
+  contact:
+    name: Александр Чигринов
+    email: alexandr.chigrinov@mail.ru
+servers:
+  - url: 'https://example.com/v1.0'
+    description: Live Server
+tags:
+  - name: Пользователь
+    description: |
+        В этом разделе вы можете получить информацию
+        о всех пользователях или о конкретном, а также
+        изменить или удалить информацию о нем.
+  - name: Сообщение
+    description: |
+        В этом разделе вы можете получить информацию
+        о всех сообщениях или о конкретном, а также
+        изменить или удалить информацию о нем.
+  - name: Медиафайлы
+    description: |
+        В этом разделе вы можете получить информацию
+        о всех вложениях в сообщениях или о конкретном, а также
+        добавить или удалить вложение.
+security:
+  - SecretApiKey: []
+  - JWT: []
+paths:
+  /user:
+    $ref: ./paths/users.yaml
+  /user/{id}:
+    $ref: './paths/user@{id}.yaml'
+  /message:
+    $ref: './paths/message.yaml'
+  /message/{id}:
+    $ref: './paths/message@{id}.yaml'
+  /message/{userId}:
+    $ref: './paths/message@{userId}.yaml'
+  /files:
+    $ref: './paths/files.yaml'
+  /file/{id}:
+    $ref: './paths/file@{id}.yaml'
+  /file/{userId}:
+    $ref: './paths/files@{userId}.yaml'

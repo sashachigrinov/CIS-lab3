@@ -1,0 +1,47 @@
+type: object
+require:
+  - sender
+properties:
+  id:
+    description: The message identifier string
+    readOnly: true
+    allOf:
+      - $ref: ./ResourceId.yaml
+  sender:
+    description: User ID
+    allOf:
+      - $ref: ./User.yaml
+  receiver:
+    description: Who will receive the message
+    type: string
+    maxLength: 255
+    example: sevsu@mail.ru
+  createdTime:
+    description: Message created time
+    allOf:
+      - $ref: ./ServerTimestamp.yaml
+  sentTime:
+    description: Message sent time
+    allOf:
+      - $ref: ./ServerTimestamp.yaml
+  topic:
+    description: Topic of message
+    type: string
+    maxLength: 255
+  messageText:
+    description: Text of message
+    type: string
+  parentMessage:
+    description: Message may have many stairs with same topic
+    allOf:
+      - $ref: ./Messages.yaml
+  status:
+    description: Transaction status
+    type: string
+    readOnly: true
+  files:
+    description: Additional files
+    type: array
+    items:
+      allOf:
+        - $ref: ./File.yaml

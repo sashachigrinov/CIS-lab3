@@ -1,0 +1,43 @@
+get:
+  tags:
+    - Медиафайлы
+  summary: Получить информацию о вложениях
+  operationId: GetFiles
+  description: |
+    Получить информацию о вложениях
+  responses:
+    '200':
+      description: Информация о файлах была успешно получена
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/File.yaml
+    '401':
+      description: Отказано в доступе
+post:
+  tags:
+    - Медиафайлы
+  summary: Добавить новый файл
+  operationId: PostFile
+  description: |
+    Добавить новый файл
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/File.yaml
+      description: File resource
+      required: true
+  responses:
+    '200':
+      description: Файл был успешно добавлен
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/File.yaml
+    '401':
+      description: Отказано в доступе
+    '422':
+      description: Неверные данные

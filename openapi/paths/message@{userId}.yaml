@@ -1,0 +1,22 @@
+parameters:
+  - $ref: ../components/parameters/resourceId.yaml
+get:
+  tags:
+    - Сообщение
+  summary: Получить все сообщения пользователя по его ID
+  operationId: GetMessagesById
+  description: |
+    Получить все сообщения пользователя по его ID
+  responses:
+    '200':
+      description: Информация о сообщениях пользователя успешно получена
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/Messages.yaml
+    '401':
+      description: Отказано в доступе
+    '404':
+      description: Не найдено

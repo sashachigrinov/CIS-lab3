@@ -1,0 +1,36 @@
+parameters:
+  - $ref: ../components/parameters/resourceId.yaml
+get:
+  tags:
+    - Медиафайлы
+  summary: Получить медиафайл по ID
+  operationId: GetFile
+  description: |
+    Получить информацию о вложении по ID
+  responses:
+    '200':
+      description: Информация о вложении успешно получена
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/File.yaml
+    '401':
+      description: Отказано в доступе
+    '404':
+      description: Не найдено
+delete:
+  tags:
+    - Медиафайлы
+  summary: Удалить по ID
+  operationId: DeleteFile
+  description: |
+    Удалить вложение по ID
+  responses:
+    '204':
+      description: Вложение было удалено
+    '401':
+      description: Отказано в доступе
+    '402':
+      description: Не можеть быть удален
+    '404':
+      description: Не найдено

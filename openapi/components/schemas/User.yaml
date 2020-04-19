@@ -1,0 +1,37 @@
+type: object
+required:
+  - name
+  - email
+  - password
+properties:
+  id:
+    description: User identifier string
+    readOnly: true
+    allOf:
+      - $ref: ./ResourceId.yaml
+  name:
+    description: Username'
+    type: string
+    maxLength: 255
+    example: Ivanov Ivan Ivanovich
+  password:
+    description: The token's password
+    type: string
+    format: password
+    writeOnly: true
+  phoneNumbers:
+    description: The phone value
+    type: string
+    example: 512-710-1640
+  email:
+    description: The email value
+    type: string
+    example: portret24@example.com
+  createdTime:
+    description: User registered time
+    allOf:
+      - $ref: ./ServerTimestamp.yaml
+  updatedTime:
+    description: User updated time
+    allOf:
+      - $ref: ./ServerTimestamp.yaml
