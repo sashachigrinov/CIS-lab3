@@ -234,7 +234,7 @@ paths:
           description: Не можеть быть удален
         '404':
           description: Не найдено
-  '/message/{userId}':
+  '/user-message/{userId}':
     get:
       tags:
         - Сообщение
@@ -334,7 +334,7 @@ paths:
           description: Не можеть быть удален
         '404':
           description: Не найдено
-  '/file/{userId}':
+  '/user-file/{userId}':
     get:
       tags:
         - Медиафайлы
